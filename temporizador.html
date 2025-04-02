@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: rgb(243, 244, 246);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .timer-container {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .timer-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .time-box {
+      background-color: white;
+      border-radius: 6px;
+      padding: 0.5rem;
+      box-shadow: 0 2px 4px -1px rgb(0 0 0 / 0.1);
+    }
+
+    .time-value {
+      font-size: 2rem;
+      font-weight: bold;
+      font-family: monospace;
+    }
+
+    .time-separator {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .timer-labels {
+      display: flex;
+      justify-content: center;
+      gap: 1.75rem;
+      color: rgb(75, 85, 99);
+    }
+
+    .timer-label {
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    @media (min-width: 640px) {
+      .time-box {
+        padding: 0.75rem;
+      }
+
+      .time-value {
+        font-size: 3rem;
+      }
+
+      .time-separator {
+        font-size: 3rem;
+      }
+
+      .timer-labels {
+        gap: 2.5rem;
+      }
+
+      .timer-label {
+        font-size: 0.875rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .time-box {
+        padding: 1rem;
+      }
+
+      .time-value {
+        font-size: 4rem;
+      }
+
+      .time-separator {
+        font-size: 4rem;
+      }
+
+      .timer-labels {
+        gap: 3.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="timer-container">
+    <div class="timer-display">
+      <div class="time-box">
+        <span class="time-value" id="days">00</span>
+      </div>
+      <span class="time-separator">:</span>
+      <div class="time-box">
+        <span class="time-value" id="hours">00</span>
+      </div>
+      <span class="time-separator">:</span>
+      <div class="time-box">
+        <span class="time-value" id="minutes">05</span>
+      </div>
+      <span class="time-separator">:</span>
+      <div class="time-box">
+        <span class="time-value" id="seconds">00</span>
+      </div>
+    </div>
+    <div class="timer-labels">
+      <span class="timer-label">Days</span>
+      <span class="timer-label">Hours</span>
+      <span class="timer-label">Minutes</span>
+      <span class="timer-label">Seconds</span>
+    </div>
+  </div>
+
+  <script>
+    const elements = {
+      days: document.getElementById('days'),
+      hours: document.getElementById('hours'),
+      minutes: document.getElementById('minutes'),
+      seconds: document.getElementById('seconds')
+    };
+
+    let time = {
+      days: 0,
+      hours: 0,
+      minutes: 5,
+      seconds: 0
+    };
+
+    function updateDisplay() {
+      for (const [unit, element] of Object.entries(elements)) {
+        element.textContent = String(time[unit]).padStart(2, '0');
+      }
+    }
+
+    const timer = setInterval(() => {
+      if (time.minutes === 0 && time.seconds === 0) {
+        clearInterval(timer);
+        return;
+      }
+
+      if (time.seconds === 0) {
+        time.minutes--;
+        time.seconds = 59;
+      } else {
+        time.seconds--;
+      }
+
+      updateDisplay();
+    }, 1000);
+
+    updateDisplay();
+  </script>
+</body>
+</html>
